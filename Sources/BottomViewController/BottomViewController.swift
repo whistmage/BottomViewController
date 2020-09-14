@@ -8,12 +8,12 @@
 
 import UIKit
 
-struct BottomViewControllerConfiguration {
+public struct BottomViewControllerConfiguration {
     var fullHeight: CGFloat
     var partialHeight: CGFloat
 }
 
-class BottomViewController: UIViewController {
+open class BottomViewController: UIViewController {
 
     // MARK: - Declaration of variables and constants
 
@@ -41,17 +41,17 @@ class BottomViewController: UIViewController {
     
     // MARK: - BottomViewController methods
 
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startLaunchAnimation()
     }
 
-    override func touchesBegan(
+    open override func touchesBegan(
         _ touches: Set<UITouch>,
         with event: UIEvent?
     ) {
@@ -61,7 +61,7 @@ class BottomViewController: UIViewController {
         }
     }
     
-    override func touchesEnded(
+    open override func touchesEnded(
         _ touches: Set<UITouch>,
         with event: UIEvent?
     ) {
@@ -72,7 +72,7 @@ class BottomViewController: UIViewController {
         }
     }
     
-    override func touchesMoved(
+    open override func touchesMoved(
         _ touches: Set<UITouch>,
         with event: UIEvent?
     ) {
@@ -86,7 +86,7 @@ class BottomViewController: UIViewController {
         }
     }
     
-    override func dismiss(
+    open override func dismiss(
         animated flag: Bool,
         completion: (() -> Void)? = nil
     ) {

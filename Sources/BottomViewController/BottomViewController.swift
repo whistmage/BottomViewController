@@ -45,10 +45,10 @@ open class BottomViewController: UIViewController {
         super.viewDidLoad()
         setupView()
     }
-    
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startLaunchAnimation()
+        showContent()
     }
 
     open override func touchesBegan(
@@ -85,20 +85,37 @@ open class BottomViewController: UIViewController {
             moveContent(offset: newHeight)
         }
     }
-    
+
     open override func dismiss(
         animated flag: Bool,
         completion: (() -> Void)? = nil
     ) {
-        hideContent(animated: flag) {
-            self.removeFromParent()
-            self.view.removeFromSuperview()
-            completion?()
-        }
+        hideContent(
+            animated: flag,
+            comletition: {
+                self.presentingViewController?.tabBarController?.tabBar.isHidden = false
+                super.dismiss(
+                    animated: false,
+                    completion: completion
+                )
+            }
+        )
+    }
+
+    /// Override this method and call super after your code,
+    /// if you need handle close ButtomViewController
+    open func close(
+        animated: Bool,
+        completion: (() -> Void)? = nil
+    ) {
+        dismiss(
+            animated: animated,
+            completion: completion
+        )
     }
     
     @objc func tapOverlay() {
-        dismiss(animated: true)
+        close(animated: true)
     }
 }
 
@@ -129,14 +146,6 @@ extension BottomViewController {
         return view.frame.height - viewLocation.y
     }
 
-    private func startLaunchAnimation() {
-        moveContent(
-            offset: configuration.partialHeight,
-            animated: true
-        )
-        isContentHidden = false
-    }
-
     private func moveContent(
         offset: CGFloat,
         animated: Bool = true,
@@ -153,7 +162,7 @@ extension BottomViewController {
                 completion?()
             }
         } else {
-            dismiss(animated: animated)
+            close(animated: animated)
         }
     }
     
@@ -165,13 +174,23 @@ extension BottomViewController {
             )
         } else {
             if offset < self.configuration.partialHeight - maxOffset  {
-                dismiss(animated: true)
+                close(animated: true)
             } else {
                 moveContent(
                     offset: configuration.partialHeight,
                     animated: true
                 )
             }
+        }
+    }
+    
+    private func showContent(animated: Bool = true) {
+        if isContentHidden {
+            moveContent(
+                offset: configuration.partialHeight,
+                animated: animated
+            )
+            isContentHidden = false
         }
     }
     

@@ -17,9 +17,9 @@ open class BottomViewController: UIViewController {
 
     // MARK: - Declaration of variables and constants
 
-    let overlayView = UIView()
-    let touchAnchorView = UIView()
-    let contentView = UIView()
+    public let overlayView = UIView()
+    public let touchAnchorView = UIView()
+    public let contentView = UIView()
 
     lazy var configuration: BottomViewControllerConfiguration = {
         let topPadding: CGFloat = 20
@@ -215,6 +215,8 @@ extension BottomViewController {
 
 extension BottomViewController {
 
+    // TODO: Добавить методы для конфигурации контента
+    
     private func setupView() {
         view.backgroundColor = .clear
         addSubviews()
